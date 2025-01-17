@@ -10,4 +10,7 @@ public record CreateUserDto
 
     [Required]
     public User.Role UserRole { get; set; }
+
+    [Required]
+    public string Password { get; set; } = null!;
 }

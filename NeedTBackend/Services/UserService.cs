@@ -18,9 +18,14 @@ public class UserService : IUserService
         {
            throw new ArgumentException("Username cannot be empty");
         }
+        if (string.IsNullOrWhiteSpace(user.Password))
+        {
+           throw new ArgumentException("Password cannot be empty");
+        }
         var newUser = new User
         {
             Username = user.Username,
+            Password = user.Password,
             UserRole = user.UserRole
         };
 
