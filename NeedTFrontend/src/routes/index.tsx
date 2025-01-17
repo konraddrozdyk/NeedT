@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  component: RouteComponent,
+  component: HomeComponent,
 });
 
-function RouteComponent() {
+function HomeComponent() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-xs">
