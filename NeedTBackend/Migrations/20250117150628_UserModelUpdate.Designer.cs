@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NeedTBackend.Data;
 
@@ -11,9 +12,11 @@ using NeedTBackend.Data;
 namespace NeedTBackend.Migrations
 {
     [DbContext(typeof(NeedTDbContext))]
-    partial class NeedTDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250117150628_UserModelUpdate")]
+    partial class UserModelUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
