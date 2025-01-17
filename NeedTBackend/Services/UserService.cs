@@ -29,4 +29,14 @@ public class UserService : IUserService
         return new UserDto { Id = newUser.Id, Username = newUser.Username, UserRole = newUser.UserRole };        
     }
 
+    public async Task<UserDto> GetUserAsync(int id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null)
+        {
+            throw new KeyNotFoundException($"User with id {id} not found.");
+        }
+        return new UserDto { Id = user.Id, Username = user.Username, UserRole = user.UserRole };
+    }
+
 }
