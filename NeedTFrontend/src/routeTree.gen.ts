@@ -11,11 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TransporterDashportImport } from './routes/transporter-dashport'
 import { Route as RegisterImport } from './routes/register'
-import { Route as DashboardImport } from './routes/dashboard'
+import { Route as OrdererDashboardImport } from './routes/orderer-dashboard'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const TransporterDashportRoute = TransporterDashportImport.update({
+  id: '/transporter-dashport',
+  path: '/transporter-dashport',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const RegisterRoute = RegisterImport.update({
   id: '/register',
@@ -23,9 +30,9 @@ const RegisterRoute = RegisterImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardRoute = DashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const OrdererDashboardRoute = OrdererDashboardImport.update({
+  id: '/orderer-dashboard',
+  path: '/orderer-dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,11 +53,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
+    '/orderer-dashboard': {
+      id: '/orderer-dashboard'
+      path: '/orderer-dashboard'
+      fullPath: '/orderer-dashboard'
+      preLoaderRoute: typeof OrdererDashboardImport
       parentRoute: typeof rootRoute
     }
     '/register': {
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
+    '/transporter-dashport': {
+      id: '/transporter-dashport'
+      path: '/transporter-dashport'
+      fullPath: '/transporter-dashport'
+      preLoaderRoute: typeof TransporterDashportImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -67,42 +81,52 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
+  '/transporter-dashport': typeof TransporterDashportRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
+  '/transporter-dashport': typeof TransporterDashportRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
+  '/transporter-dashport': typeof TransporterDashportRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/register'
+  fullPaths: '/' | '/orderer-dashboard' | '/register' | '/transporter-dashport'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/register'
-  id: '__root__' | '/' | '/dashboard' | '/register'
+  to: '/' | '/orderer-dashboard' | '/register' | '/transporter-dashport'
+  id:
+    | '__root__'
+    | '/'
+    | '/orderer-dashboard'
+    | '/register'
+    | '/transporter-dashport'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
+  OrdererDashboardRoute: typeof OrdererDashboardRoute
   RegisterRoute: typeof RegisterRoute
+  TransporterDashportRoute: typeof TransporterDashportRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  OrdererDashboardRoute: OrdererDashboardRoute,
   RegisterRoute: RegisterRoute,
+  TransporterDashportRoute: TransporterDashportRoute,
 }
 
 export const routeTree = rootRoute
@@ -116,18 +140,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/dashboard",
-        "/register"
+        "/orderer-dashboard",
+        "/register",
+        "/transporter-dashport"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
+    "/orderer-dashboard": {
+      "filePath": "orderer-dashboard.tsx"
     },
     "/register": {
       "filePath": "register.tsx"
+    },
+    "/transporter-dashport": {
+      "filePath": "transporter-dashport.tsx"
     }
   }
 }

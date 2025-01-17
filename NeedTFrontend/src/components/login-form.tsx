@@ -42,7 +42,10 @@ export function LoginForm({
       const user = await response.json();
       setUser(user);
       navigate({
-        to: user.role === "orderer" ? "/dashboard" : "/dashboard",
+        to:
+          user.role === "orderer"
+            ? "/orderer-dashboard"
+            : "/transporter-dashboard",
       });
     } catch (err: any) {
       setError(err.message);
