@@ -20,14 +20,14 @@ export function RegisterForm({
         <CardHeader>
           <CardTitle className="text-2xl">Registrera</CardTitle>
           <CardDescription>
-            Fyll i dina registeringsuppgifter för att gå vidare
+            Skapa ett konto för att få tillgång till appen
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Användarnamn</Label>
+                <Label htmlFor="username">Användarnamn</Label>
                 <Input
                   id="username"
                   type="username"
