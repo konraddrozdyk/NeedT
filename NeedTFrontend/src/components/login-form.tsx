@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { useUser } from "../context/user-context";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +17,38 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const { setUser } = useUser();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    try {
+      const response = await fetch("/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Invalid username or password");
+      }
+
+      //Make sure to edit later when different dashboard pages are created
+      const user = await response.json();
+      setUser(user);
+      navigate({
+        to: user.role === "orderer" ? "/dashboard" : "/dashboard",
+      });
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -24,14 +59,16 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Användarnamn</Label>
+                <Label htmlFor="username">Användarnamn</Label>
                 <Input
                   id="username"
-                  type="username"
+                  type="text"
                   placeholder="Användarnamn"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>
@@ -45,11 +82,19 @@ export function LoginForm({
                     Har du glömt ditt lösenord?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Lösenord"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
               </div>
               <Button type="submit" className="w-full">
                 Logga in
               </Button>
+              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
             <div className="mt-4 text-center text-sm">
               Inget konto?{" "}
