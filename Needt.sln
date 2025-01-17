@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeedTBackend", "NeedTBackend\NeedTBackend.csproj", "{0F1BE990-F02E-F686-5F7F-1EAC464D31EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeeTTests", "NeedTTests\NeeTTests.csproj", "{95554C03-70EC-8DF8-57A3-DBA4E962C294}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F1BE990-F02E-F686-5F7F-1EAC464D31EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F1BE990-F02E-F686-5F7F-1EAC464D31EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F1BE990-F02E-F686-5F7F-1EAC464D31EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F1BE990-F02E-F686-5F7F-1EAC464D31EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95554C03-70EC-8DF8-57A3-DBA4E962C294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95554C03-70EC-8DF8-57A3-DBA4E962C294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95554C03-70EC-8DF8-57A3-DBA4E962C294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95554C03-70EC-8DF8-57A3-DBA4E962C294}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4674CF16-D2AB-441B-A106-54768D0CC064}
+	EndGlobalSection
+EndGlobal
