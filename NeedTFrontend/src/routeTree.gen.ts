@@ -11,16 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TransporterDashportImport } from './routes/transporter-dashport'
+import { Route as TransporterDashboardImport } from './routes/transporter-dashboard'
 import { Route as RegisterImport } from './routes/register'
 import { Route as OrdererDashboardImport } from './routes/orderer-dashboard'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const TransporterDashportRoute = TransporterDashportImport.update({
-  id: '/transporter-dashport',
-  path: '/transporter-dashport',
+const TransporterDashboardRoute = TransporterDashboardImport.update({
+  id: '/transporter-dashboard',
+  path: '/transporter-dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,11 +67,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterImport
       parentRoute: typeof rootRoute
     }
-    '/transporter-dashport': {
-      id: '/transporter-dashport'
-      path: '/transporter-dashport'
-      fullPath: '/transporter-dashport'
-      preLoaderRoute: typeof TransporterDashportImport
+    '/transporter-dashboard': {
+      id: '/transporter-dashboard'
+      path: '/transporter-dashboard'
+      fullPath: '/transporter-dashboard'
+      preLoaderRoute: typeof TransporterDashboardImport
       parentRoute: typeof rootRoute
     }
   }
@@ -83,14 +83,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
-  '/transporter-dashport': typeof TransporterDashportRoute
+  '/transporter-dashboard': typeof TransporterDashboardRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
-  '/transporter-dashport': typeof TransporterDashportRoute
+  '/transporter-dashboard': typeof TransporterDashboardRoute
 }
 
 export interface FileRoutesById {
@@ -98,20 +98,20 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
-  '/transporter-dashport': typeof TransporterDashportRoute
+  '/transporter-dashboard': typeof TransporterDashboardRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/orderer-dashboard' | '/register' | '/transporter-dashport'
+  fullPaths: '/' | '/orderer-dashboard' | '/register' | '/transporter-dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/orderer-dashboard' | '/register' | '/transporter-dashport'
+  to: '/' | '/orderer-dashboard' | '/register' | '/transporter-dashboard'
   id:
     | '__root__'
     | '/'
     | '/orderer-dashboard'
     | '/register'
-    | '/transporter-dashport'
+    | '/transporter-dashboard'
   fileRoutesById: FileRoutesById
 }
 
@@ -119,14 +119,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   OrdererDashboardRoute: typeof OrdererDashboardRoute
   RegisterRoute: typeof RegisterRoute
-  TransporterDashportRoute: typeof TransporterDashportRoute
+  TransporterDashboardRoute: typeof TransporterDashboardRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   OrdererDashboardRoute: OrdererDashboardRoute,
   RegisterRoute: RegisterRoute,
-  TransporterDashportRoute: TransporterDashportRoute,
+  TransporterDashboardRoute: TransporterDashboardRoute,
 }
 
 export const routeTree = rootRoute
@@ -142,7 +142,7 @@ export const routeTree = rootRoute
         "/",
         "/orderer-dashboard",
         "/register",
-        "/transporter-dashport"
+        "/transporter-dashboard"
       ]
     },
     "/": {
@@ -154,8 +154,8 @@ export const routeTree = rootRoute
     "/register": {
       "filePath": "register.tsx"
     },
-    "/transporter-dashport": {
-      "filePath": "transporter-dashport.tsx"
+    "/transporter-dashboard": {
+      "filePath": "transporter-dashboard.tsx"
     }
   }
 }
