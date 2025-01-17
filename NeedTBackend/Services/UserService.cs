@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using NeedTBackend.Data;
 using NeedTBackend.DTOs;
 using NeedTBackend.Models;
@@ -44,4 +45,13 @@ public class UserService : IUserService
         return new UserDto { Id = user.Id, Username = user.Username, UserRole = user.UserRole };
     }
 
+    public async Task<UserDto> LoginAsync(LoginDto login)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username && u.Password == login.Password);
+        if (user == null)
+        {
+            throw new KeyNotFoundException("Invalid username or password");
+        }
+        return new UserDto { Username = user.Username, UserRole = user.UserRole };
+    }
 }
