@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace NeedTBackend.Models;
 
 public class User
 {
+    [Key]
     public int Id { get; set; }
     public string Username { get; set; } = null!;
     public Role UserRole { get; set; }

@@ -6,22 +6,27 @@ namespace NeedTBackend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserControllers : ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
 
-    public UserControllers(IUserService userService)
+    public UsersController(IUserService userService)
     {
         _userService = userService;
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUserAsync(CreateUserDto user)
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserDto user)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         try
         {
             var newUser = await _userService.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetUserAsync), new { id = newUser.Id }, newUser);
+            return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
         }
         catch (ArgumentException e)
         {
@@ -29,8 +34,9 @@ public class UserControllers : ControllerBase
         }
     }
 
+
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserAsync(int id)
+    public async Task<IActionResult> GetUser(int id)
     {
         try
         {
