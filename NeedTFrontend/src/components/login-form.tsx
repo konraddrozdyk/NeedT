@@ -100,12 +100,12 @@ export function LoginForm({
               </Button>
               {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
-            <div className="mt-4 text-center text-sm">
+            {/* <div className="mt-4 text-center text-sm">
               Inget konto?{" "}
               <a href="/register" className="underline underline-offset-4">
                 Klicka här för att skapa
               </a>
-            </div>
+            </div> */}
           </form>
         </CardContent>
       </Card>
