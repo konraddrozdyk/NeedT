@@ -38,14 +38,13 @@ export function LoginForm({
         throw new Error("Invalid username or password");
       }
 
-      //Make sure to edit later when different dashboard pages are created
       const user = await response.json();
       setUser(user);
       navigate({
         to:
           user.role === "orderer"
-            ? "/orderer-dashboard"
-            : "/transporter-dashboard",
+            ? "/transporter-dashboard"
+            : "/orderer-dashboard",
       });
     } catch (err: any) {
       setError(err.message);
