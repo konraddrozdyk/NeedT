@@ -6,5 +6,5 @@ public class UserDto
 {
     public int Id { get; set; }
     public string Username { get; set; } = null!;
-    public User.Role UserRole { get; set; }
+    public string UserRole { get; set; } = null!;
 }

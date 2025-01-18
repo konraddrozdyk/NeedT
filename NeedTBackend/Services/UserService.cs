@@ -32,7 +32,7 @@ public class UserService : IUserService
 
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
-        return new UserDto { Id = newUser.Id, Username = newUser.Username, UserRole = newUser.UserRole };        
+        return new UserDto { Id = newUser.Id, Username = newUser.Username, UserRole = newUser.UserRole.ToString() };        
     }
 
     public async Task<UserDto> GetUserAsync(int id)
@@ -42,7 +42,7 @@ public class UserService : IUserService
         {
             throw new KeyNotFoundException($"User with id {id} not found.");
         }
-        return new UserDto { Id = user.Id, Username = user.Username, UserRole = user.UserRole };
+        return new UserDto { Id = user.Id, Username = user.Username, UserRole = user.UserRole.ToString() };
     }
 
     public async Task<UserDto> LoginAsync(LoginDto login)
@@ -52,6 +52,6 @@ public class UserService : IUserService
         {
             throw new KeyNotFoundException("Invalid username or password");
         }
-        return new UserDto { Username = user.Username, UserRole = user.UserRole, Id = user.Id };
+        return new UserDto { Username = user.Username, UserRole = user.UserRole.ToString(), Id = user.Id };
     }
 }

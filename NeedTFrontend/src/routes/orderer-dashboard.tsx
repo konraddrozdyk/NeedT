@@ -9,7 +9,7 @@ export const Route = createFileRoute("/orderer-dashboard")({
 function RouteComponent() {
   const { user } = useUser();
 
-  if (!user || user.role !== "orderer") {
+  if (!user || user.userRole !== "Orderer") {
     return <div>Not authorized</div>;
   }
 

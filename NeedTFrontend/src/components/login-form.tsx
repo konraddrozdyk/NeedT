@@ -39,13 +39,15 @@ export function LoginForm({
       }
 
       const user = await response.json();
+      console.log("User:", user);
       setUser(user);
       navigate({
         to:
-          user.role === "orderer"
-            ? "/transporter-dashboard"
-            : "/orderer-dashboard",
+          user.userRole === "Orderer"
+            ? "/orderer-dashboard"
+            : "/transporter-dashboard",
       });
+      console.log("Navigating to:", user.userRole);
     } catch (err: any) {
       setError(err.message);
     }
