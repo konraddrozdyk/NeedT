@@ -52,6 +52,6 @@ public class UserService : IUserService
         {
             throw new KeyNotFoundException("Invalid username or password");
         }
-        return new UserDto { Username = user.Username, UserRole = user.UserRole };
+        return new UserDto { Username = user.Username, UserRole = user.UserRole, Id = user.Id };
     }
 }

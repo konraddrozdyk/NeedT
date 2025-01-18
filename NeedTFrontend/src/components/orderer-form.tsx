@@ -7,6 +7,7 @@ import {
   FormMessage,
   FormField,
 } from "@/components/ui/form";
+import { useUser } from "../context/user-context";
 
 interface FormValues {
   location: string;
@@ -17,6 +18,7 @@ interface FormValues {
 }
 
 export default function OrderForm() {
+  const { user } = useUser();
   const form = useForm<FormValues>({
     defaultValues: {
       location: "",
@@ -27,8 +29,33 @@ export default function OrderForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log("Form submitted with data:", data);
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const jobPayload = {
+      title: "Transport Job",
+      origin: data.location,
+      destination: data.destination,
+      precaution: data.warning === "option1",
+      description: data.additional,
+      ordererId: user?.id,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5013/api/Jobs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jobPayload),
+      });
+
+      if (response.ok) {
+        alert("Job created successfully!");
+      } else {
+        alert("Failed to create job:");
+      }
+    } catch (error) {
+      alert("Error creating job:");
+    }
   };
 
   return (
