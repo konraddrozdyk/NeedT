@@ -111,5 +111,10 @@ public class JobsController : ControllerBase
         }
     }
 
-    
+    [HttpGet("transporter/{transporterId}")]
+    public async Task<ActionResult<IEnumerable<JobDto>>> GetJobsByTransporter(int transporterId)
+    {
+        var jobs = await _jobService.GetJobsByTransporter(transporterId);
+        return Ok(jobs);
+    }
 }

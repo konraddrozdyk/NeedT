@@ -175,5 +175,19 @@ public class JobService : IJobService
         };
     }
     
+    public async Task<IEnumerable<JobDto>> GetJobsByTransporter(int transporterId)
+    {
+       var jobs = await _context.Jobs.Where(j => j.TransporterId == transporterId).ToListAsync();
+        return jobs.Select(job => new JobDto
+        {
+            Title = job.Title ?? string.Empty,
+            Origin = job.Origin,
+            Destination = job.Destination,
+            Precaution = job.Precaution,
+            Date = job.Date,
+            Description = job.Description,
+            OrdererId = job.OrdererId
+        });
+    }
 
 }
