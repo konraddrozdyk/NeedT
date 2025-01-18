@@ -51,22 +51,22 @@ export default function OrderForm() {
 
       if (response.ok) {
         toast({
-          title: "Success!",
-          description: "The job was created successfully.",
+          title: "Din transportförfrågan har skickats",
+          description: "Vi kontaktar en transportör åt dig",
           variant: "default",
         });
       } else {
         const errorText = await response.text();
         toast({
-          title: "Error",
-          description: `Failed to create job: ${errorText}`,
+          title: "Något gick fel",
+          description: `Kontakta support: ${errorText}`,
           variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: `An unexpected error occurred: ${error instanceof Error ? error.message : "Unknown error"}`,
+        title: "Något gick fel",
+        description: `Ett fel har inträffat: ${error instanceof Error ? error.message : "Kontakta support"}`,
         variant: "destructive",
       });
     }
