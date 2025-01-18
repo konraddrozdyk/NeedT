@@ -150,4 +150,30 @@ public class JobService : IJobService
             OrdererId = job.OrdererId
         };
     }
+
+    public async Task<JobDto> CompleteJobAsync(int id)
+    {
+        var job = await _context.Jobs.FindAsync(id);
+
+        if (job == null)
+        {
+            throw new Exception("Job not found");
+        }
+
+        job.JobStatus = Job.Status.Completed;
+        await _context.SaveChangesAsync();
+
+        return new JobDto
+        {
+            Title = job.Title ?? string.Empty,
+            Origin = job.Origin,
+            Destination = job.Destination,
+            Precaution = job.Precaution,
+            Date = job.Date,
+            Description = job.Description,
+            OrdererId = job.OrdererId
+        };
+    }
+    
+
 }
