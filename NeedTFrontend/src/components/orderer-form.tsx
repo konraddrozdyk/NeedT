@@ -8,6 +8,7 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { useUser } from "../context/user-context";
+import { toast } from "@/hooks/use-toast";
 
 interface FormValues {
   location: string;
@@ -49,12 +50,25 @@ export default function OrderForm() {
       });
 
       if (response.ok) {
-        alert("Job created successfully!");
+        toast({
+          title: "Success!",
+          description: "The job was created successfully.",
+          variant: "default",
+        });
       } else {
-        alert("Failed to create job:");
+        const errorText = await response.text();
+        toast({
+          title: "Error",
+          description: `Failed to create job: ${errorText}`,
+          variant: "destructive",
+        });
       }
     } catch (error) {
-      alert("Error creating job:");
+      toast({
+        title: "Error",
+        description: `An unexpected error occurred: ${error instanceof Error ? error.message : "Unknown error"}`,
+        variant: "destructive",
+      });
     }
   };
 
