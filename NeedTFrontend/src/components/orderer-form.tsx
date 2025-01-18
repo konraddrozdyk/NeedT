@@ -55,6 +55,7 @@ export default function OrderForm() {
           description: "Vi kontaktar en transportör åt dig",
           variant: "default",
         });
+        form.reset();
       } else {
         const errorText = await response.text();
         toast({
