@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { useUser } from "../context/user-context";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "./ui/card";
+import { Input } from "./ui/input";
+import { useUser } from "@/context/user-context";
+import { useNavigate } from "@tanstack/react-router";
+import { cn } from "@/lib/utils";
+import { Label } from "./ui/label";
 
 export function LoginForm({
   className,
@@ -39,7 +39,6 @@ export function LoginForm({
       }
 
       const user = await response.json();
-      console.log("User:", user);
       setUser(user);
       navigate({
         to:
@@ -47,15 +46,23 @@ export function LoginForm({
             ? "/orderer-dashboard"
             : "/transporter-dashboard",
       });
-      console.log("Navigating to:", user.userRole);
     } catch (err: any) {
       setError(err.message);
     }
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+    <div
+      className={cn(
+        "flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500",
+        className
+      )}
+      {...props}
+    >
+      <h1 className="mb-6 text-4xl font-extrabold text-white tracking-tight">
+        NeedT
+      </h1>
+      <Card className="w-full max-w-md shadow-xl">
         <CardHeader>
           <CardTitle className="text-2xl">Logga in</CardTitle>
           <CardDescription>
@@ -95,17 +102,14 @@ export function LoginForm({
                   required
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600"
+              >
                 Logga in
               </Button>
               {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
-            {/* <div className="mt-4 text-center text-sm">
-              Inget konto?{" "}
-              <a href="/register" className="underline underline-offset-4">
-                Klicka här för att skapa
-              </a>
-            </div> */}
           </form>
         </CardContent>
       </Card>
