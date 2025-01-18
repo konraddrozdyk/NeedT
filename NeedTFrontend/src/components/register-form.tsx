@@ -41,6 +41,17 @@ export function RegisterForm({
                 </div>
                 <Input id="password" type="password" required />
               </div>
+              <div className="grid gap-2">
+                <select
+                  id="role"
+                  className="mt-2 p-2 border rounded-md"
+                  required
+                >
+                  <option value="">Välj en roll</option>
+                  <option value="orderer">Orderer</option>
+                  <option value="transporter">Transporter</option>
+                </select>
+              </div>
               <Button type="submit" className="w-full">
                 Gå vidare
               </Button>
