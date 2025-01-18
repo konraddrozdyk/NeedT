@@ -5,7 +5,7 @@ namespace NeedTBackend.Services;
 
 public interface IJobService
 {
-    Task<IEnumerable<JobDto>> GetJobsAsync();
+    // Task<IEnumerable<JobDto>> GetJobsAsync();
     Task<JobDto> GetJobByIdAsync(int id);
     Task<JobDto> CreateJobAsync(CreateJobDto createJobDto);
     // Task<Job> UpdateJobAsync(int id, UpdateJobDto updateJobDto);
