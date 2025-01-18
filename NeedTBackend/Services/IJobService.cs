@@ -13,8 +13,6 @@ public interface IJobService
     Task<IEnumerable<JobDto>> GetCompletedJobsAsync();
     Task<JobDto> AcceptJobAsync(int id);
     Task<JobDto> CompleteJobAsync(int id);
-    
+    Task<IEnumerable<JobDto>> GetJobsByTransporter(int ordererId);
 
-    // Task<Job> UpdateJobAsync(int id, UpdateJobDto updateJobDto);
-    // Task DeleteJobAsync(int id);
 }
