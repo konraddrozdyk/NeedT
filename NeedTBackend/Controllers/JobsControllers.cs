@@ -23,7 +23,7 @@ public class JobsController : ControllerBase
         try
         {
             var job = await _jobService.CreateJobAsync(createJobDto);
-            return CreatedAtAction(nameof(GetJobByIdAsync), new { id = job.Id }, job);
+            return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, job);
         }
         catch (ArgumentException e)
         {
@@ -32,7 +32,7 @@ public class JobsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<JobDto>> GetJobByIdAsync(int id)
+    public async Task<ActionResult<JobDto>> GetJobById(int id)
     {
         try
         {

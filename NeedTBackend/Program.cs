@@ -12,6 +12,8 @@ builder.Services.AddDbContext<NeedTDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJobService, JobService>();
+
 
 builder.Services.AddCors(options =>
 {
