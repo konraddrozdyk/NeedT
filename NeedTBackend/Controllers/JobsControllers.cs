@@ -76,11 +76,12 @@ public class JobsController : ControllerBase
     }
 
     [HttpPatch("{id}/accept")]
-    public async Task<ActionResult<JobDto>> AcceptJobAsync(int id)
+    public async Task<ActionResult<JobDto>> AcceptJobAsync(int id, [FromBody] int transporterId)
     {
         try
         {
-            var job = await _jobService.AcceptJobAsync(id);
+            var job = await _jobService.AcceptJobAsync(id, transporterId);
+            
             return Ok(job);
         }
         catch (KeyNotFoundException e)

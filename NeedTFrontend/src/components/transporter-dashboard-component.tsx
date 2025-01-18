@@ -12,15 +12,88 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+
+// Enum mapping for job statuses
+const jobStatusLabels: Record<string, string> = {
+  Pending: "Ohanterad",
+  Accepted: "Accepterad",
+  Completed: "Avslutad",
+};
 
 export function TransporterDashboard() {
+  const [pendingJobs, setPendingJobs] = useState([]);
+  const [myJobs, setMyJobs] = useState([]);
+  const [allJobs, setAllJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const pendingResponse = await fetch("/api/Jobs/pending");
+        const pendingData = await pendingResponse.json();
+
+        const myJobsResponse = await fetch("/api/Jobs/my-jobs");
+        const myJobsData = await myJobsResponse.json();
+
+        const allJobsResponse = await fetch("/api/Jobs/all");
+        const allJobsData = await allJobsResponse.json();
+
+        setPendingJobs(pendingData);
+        setMyJobs(myJobsData);
+        setAllJobs(allJobsData);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const renderJobCards = (jobs: any[]) =>
+    jobs.length > 0 ? (
+      jobs.map((job) => (
+        <Card key={job.id}>
+          <CardHeader>
+            <CardTitle>Jobb ID: {job.id}</CardTitle>
+            <CardDescription>{job.description}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Status: {jobStatusLabels[job.status] || job.status}</p>
+          </CardContent>
+          <CardFooter>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button>Details</Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <div>
+                  <p>Jobb ID: {job.id}</p>
+                  <p>{job.details}</p>
+                </div>
+              </PopoverContent>
+            </Popover>
+            <Button className="ml-4">Ta emot transporten</Button>
+          </CardFooter>
+        </Card>
+      ))
+    ) : (
+      <div className="text-center text-gray-500">
+        Inga jobb att visa just nu.
+      </div>
+    );
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="flex justify-center items-center h-screen relative">
       <div className="w-4/5 h-4/5 bg-white rounded-lg shadow-lg p-6 overflow-hidden">
-        <div className="absolute top-4 left-4 text-xl font-bold text-gray-800 dark:text-gray-200">
-          Logga ut
-        </div>
-
         <Tabs defaultValue="waiting">
           <TabsList>
             <TabsTrigger value="waiting">Ohanterade transporter</TabsTrigger>
@@ -30,146 +103,19 @@ export function TransporterDashboard() {
 
           <TabsContent value="waiting">
             <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Job ID: 001</CardTitle>
-                  <CardDescription>test</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Status: Waiting</p>
-                </CardContent>
-                <CardFooter>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                        Details
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div>
-                        <p>Job ID: 001</p>
-                        <p>Details about the job...</p>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+              {renderJobCards(pendingJobs)}
+            </div>
+          </TabsContent>
 
-                  <button className="ml-4 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600">
-                    Ta emot transporten
-                  </button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Job ID: 001</CardTitle>
-                  <CardDescription>test</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Status: Waiting</p>
-                </CardContent>
-                <CardFooter>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                        Details
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div>
-                        <p>Job ID: 001</p>
-                        <p>Details about the job...</p>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
+          <TabsContent value="my-transports">
+            <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+              {renderJobCards(myJobs)}
+            </div>
+          </TabsContent>
 
-                  <button className="ml-4 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600">
-                    Ta emot transporten
-                  </button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Job ID: 001</CardTitle>
-                  <CardDescription>test</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Status: Waiting</p>
-                </CardContent>
-                <CardFooter>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                        Details
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div>
-                        <p>Job ID: 001</p>
-                        <p>Details about the job...</p>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-
-                  <button className="ml-4 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600">
-                    Ta emot transporten
-                  </button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Job ID: 001</CardTitle>
-                  <CardDescription>test</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Status: Waiting</p>
-                </CardContent>
-                <CardFooter>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                        Details
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div>
-                        <p>Job ID: 001</p>
-                        <p>Details about the job...</p>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-
-                  <button className="ml-4 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600">
-                    Ta emot transporten
-                  </button>
-                </CardFooter>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Job ID: 001</CardTitle>
-                  <CardDescription>test</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Status: Waiting</p>
-                </CardContent>
-                <CardFooter>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600">
-                        Details
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div>
-                        <p>Job ID: 001</p>
-                        <p>Details about the job...</p>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-
-                  <button className="ml-4 px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600">
-                    Ta emot transporten
-                  </button>
-                </CardFooter>
-              </Card>
+          <TabsContent value="view-all">
+            <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+              {renderJobCards(allJobs)}
             </div>
           </TabsContent>
         </Tabs>

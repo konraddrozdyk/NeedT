@@ -127,7 +127,7 @@ public class JobService : IJobService
         });
     }
 
-    public async Task<JobDto> AcceptJobAsync(int id)
+    public async Task<JobDto> AcceptJobAsync(int id, int transporterId)
     {
         var job = await _context.Jobs.FindAsync(id);
 
@@ -137,6 +137,7 @@ public class JobService : IJobService
         }
 
         job.JobStatus = Job.Status.Accepted;
+        job.TransporterId = transporterId;
         await _context.SaveChangesAsync();
 
         return new JobDto
