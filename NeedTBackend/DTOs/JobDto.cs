@@ -5,6 +5,7 @@ namespace NeedTBackend.Dtos;
 
 public class JobDto
 {
+    public int Id { get; set; }
     public string Title { get; set; } = null!;
     public string Origin { get; set; } = null!;
     public string Destination { get; set; } = null!;
