@@ -1,3 +1,4 @@
+import { TransporterDashboard } from "@/components/transporter-dashboard-component";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/transporter-dashboard")({
@@ -5,5 +6,9 @@ export const Route = createFileRoute("/transporter-dashboard")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/transporter-dashport"!</div>;
+  return (
+    <div>
+      <TransporterDashboard />
+    </div>
+  );
 }
