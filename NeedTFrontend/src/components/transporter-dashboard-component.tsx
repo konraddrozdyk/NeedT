@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/user-context";
 import { useNavigate } from "@tanstack/react-router";
+import { LogoutModal } from "./logout-confirm-window";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -27,6 +28,7 @@ export function TransporterDashboard() {
   const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("waiting");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,11 +126,12 @@ export function TransporterDashboard() {
   };
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      setUser(null);
-      navigate({ to: "/" });
-    }
+    setIsModalOpen(true);
+  };
+
+  const confirmLogout = () => {
+    setUser(null);
+    navigate({ to: "/" });
   };
 
   const renderJobCards = (jobs: any[]) =>
@@ -213,6 +216,11 @@ export function TransporterDashboard() {
       >
         Logga ut
       </Button>
+      <LogoutModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmLogout}
+      />
       <div className="flex justify-center items-center h-screen relative">
         <div className="w-4/5 h-4/5 bg-white rounded-lg shadow-lg p-6 overflow-hidden">
           <Tabs
