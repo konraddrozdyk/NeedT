@@ -16,11 +16,11 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
 // Enum mapping for job statuses
-const jobStatusLabels: Record<string, string> = {
-  Pending: "Ohanterad",
-  Accepted: "Accepterad",
-  Completed: "Avslutad",
-};
+// const jobStatusLabels: Record<string, number> = {
+//   Pending: 0,
+//   Accepted: 1,
+//   Completed: 2,
+// };
 
 export function TransporterDashboard() {
   const [pendingJobs, setPendingJobs] = useState([]);
@@ -35,10 +35,10 @@ export function TransporterDashboard() {
         const pendingResponse = await fetch("/api/Jobs/pending");
         const pendingData = await pendingResponse.json();
 
-        const myJobsResponse = await fetch("/api/Jobs/my-jobs");
+        const myJobsResponse = await fetch("/api/Jobs/transporter/1");
         const myJobsData = await myJobsResponse.json();
 
-        const allJobsResponse = await fetch("/api/Jobs/all");
+        const allJobsResponse = await fetch("/api/Jobs");
         const allJobsData = await allJobsResponse.json();
 
         setPendingJobs(pendingData);
@@ -59,16 +59,18 @@ export function TransporterDashboard() {
       jobs.map((job) => (
         <Card key={job.id}>
           <CardHeader>
-            <CardTitle>Jobb ID: {job.id}</CardTitle>
+            <CardTitle>Jobb: {job.title}</CardTitle>
             <CardDescription>{job.description}</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>Status: {jobStatusLabels[job.status] || job.status}</p>
+            <p>Från: {job.origin}</p>
+            <p>Till: {job.destination}</p>
+            <p>Precaution: {job.precaution ? "Ja" : "Nej"}</p>
           </CardContent>
           <CardFooter>
             <Popover>
               <PopoverTrigger asChild>
-                <Button>Details</Button>
+                <Button>Se detaljerad info</Button>
               </PopoverTrigger>
               <PopoverContent>
                 <div>
@@ -88,7 +90,7 @@ export function TransporterDashboard() {
     );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Vänta medan vi laddar ditt innehåll...</div>;
   }
 
   return (
