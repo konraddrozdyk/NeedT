@@ -77,7 +77,6 @@ export function TransporterDashboard() {
       if (response.ok) {
         const data = await response.json();
 
-        // Update both `myJobs` and `pendingJobs` states
         setMyJobs((prevMyJobs) => [...prevMyJobs, data]);
         setPendingJobs((prevPendingJobs) =>
           prevPendingJobs.filter((job) => job.id !== jobId)
@@ -90,6 +89,35 @@ export function TransporterDashboard() {
       }
     } catch (error) {
       console.error("Error accepting job:", error);
+    }
+  };
+
+  const handleCompleteJob = async (jobId: number) => {
+    if (!user || !user.id) {
+      console.error("User not logged in or missing ID");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/Jobs/${jobId}/complete`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ transporterId: user.id }),
+      });
+
+      if (response.ok) {
+        const updatedJob = await response.json();
+
+        setMyJobs((prevMyJobs) => prevMyJobs.filter((job) => job.id !== jobId));
+
+        console.log("Job marked as completed:", updatedJob);
+      } else {
+        console.error(`Error completing job: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error completing job:", error);
     }
   };
 
@@ -118,8 +146,8 @@ export function TransporterDashboard() {
                     Beskrivning:{" "}
                     {job.description || "Ingen beskrivning tillgänglig"}
                   </p>
-                  <p>Start: {job.origin}</p>
-                  <p>Slut: {job.destination}</p>
+                  <p>Från: {job.origin}</p>
+                  <p>Till: {job.destination}</p>
                   <p>Datum: {new Date(job.date).toLocaleString()}</p>
                   <p>Smittrisk: {job.precaution ? "Ja" : "Nej"}</p>
                   <p>
@@ -137,6 +165,14 @@ export function TransporterDashboard() {
             >
               Ta emot transporten
             </Button>
+            {activeTab === "my-transports" && job.status !== "completed" && (
+              <Button
+                className="ml-4"
+                onClick={() => handleCompleteJob(job.id)}
+              >
+                Sätt som färdigt
+              </Button>
+            )}
           </CardFooter>
         </Card>
       ))
