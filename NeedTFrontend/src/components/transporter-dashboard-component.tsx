@@ -21,9 +21,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 export function TransporterDashboard() {
   const { user } = useUser();
   const [pendingJobs, setPendingJobs] = useState([]);
-  const [myJobs, setMyJobs] = useState([]);
+  const [myJobs, setMyJobs] = useState<any[]>([]);
   const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("waiting");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +74,10 @@ export function TransporterDashboard() {
 
       if (response.ok) {
         const data = await response.json();
+        setMyJobs((prevMyJobs) => [...prevMyJobs, data]);
+
+        setActiveTab("my-transports");
+
         console.log("Job accepted:", data);
       } else {
         console.error(`Error accepting job: ${response.statusText}`);
@@ -93,7 +98,7 @@ export function TransporterDashboard() {
           <CardContent>
             <p>Från: {job.origin}</p>
             <p>Till: {job.destination}</p>
-            <p>Precaution: {job.precaution ? "Ja" : "Nej"}</p>
+            <p>Smittrisk: {job.precaution ? "Ja" : "Nej"}</p>
           </CardContent>
           <CardFooter>
             <Popover>
@@ -103,11 +108,27 @@ export function TransporterDashboard() {
               <PopoverContent>
                 <div>
                   <p>Jobb ID: {job.id}</p>
-                  <p>{job.details}</p>
+                  <p>
+                    Beskrivning:{" "}
+                    {job.description || "Ingen beskrivning tillgänglig"}
+                  </p>
+                  <p>Start: {job.origin}</p>
+                  <p>Slut: {job.destination}</p>
+                  <p>Datum: {new Date(job.date).toLocaleString()}</p>
+                  <p>Smittrisk: {job.precaution ? "Ja" : "Nej"}</p>
+                  <p>
+                    Transportör:{" "}
+                    {job.transporterId ? job.transporterId : "Ej tilldelad"}
+                  </p>
+                  <p>Beställare: {job.ordererId}</p>
                 </div>
               </PopoverContent>
             </Popover>
-            <Button className="ml-4" onClick={() => handleAcceptJob(job.id)}>
+            <Button
+              className="ml-4"
+              onClick={() => handleAcceptJob(job.id)}
+              style={{ display: activeTab === "waiting" ? "inline" : "none" }}
+            >
               Ta emot transporten
             </Button>
           </CardFooter>
@@ -123,10 +144,23 @@ export function TransporterDashboard() {
     return <div>Vänta medan vi laddar ditt innehåll...</div>;
   }
 
+  if (!user) {
+    return (
+      <div>
+        <div>Logga in för att komma åt din dashboard</div>
+        <a href="/index">Logga in</a>
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-center items-center h-screen relative">
       <div className="w-4/5 h-4/5 bg-white rounded-lg shadow-lg p-6 overflow-hidden">
-        <Tabs defaultValue="waiting">
+        <Tabs
+          defaultValue="waiting"
+          value={activeTab}
+          onValueChange={setActiveTab}
+        >
           <TabsList>
             <TabsTrigger value="waiting">Ohanterade transporter</TabsTrigger>
             <TabsTrigger value="my-transports">Mina transporter</TabsTrigger>
