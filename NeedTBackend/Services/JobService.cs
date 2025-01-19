@@ -53,6 +53,7 @@ public class JobService : IJobService
 
         return new JobDto
         {
+            Id = job.Id,
             Title = job.Title ?? string.Empty,
             Origin = job.Origin,
             Destination = job.Destination,
@@ -69,6 +70,7 @@ public class JobService : IJobService
 
         return jobs.Select(job => new JobDto
         {
+            Id = job.Id,
             Title = job.Title ?? string.Empty,
             Origin = job.Origin,
             Destination = job.Destination,
@@ -85,6 +87,7 @@ public class JobService : IJobService
 
         return jobs.Select(job => new JobDto
         {
+            Id = job.Id,
             Title = job.Title ?? string.Empty,
             Origin = job.Origin,
             Destination = job.Destination,
@@ -101,6 +104,7 @@ public class JobService : IJobService
 
         return jobs.Select(job => new JobDto
         {
+            Id = job.Id,
             Title = job.Title ?? string.Empty,
             Origin = job.Origin,
             Destination = job.Destination,
@@ -117,6 +121,7 @@ public class JobService : IJobService
 
         return jobs.Select(job => new JobDto
         {
+            Id = job.Id,
             Title = job.Title ?? string.Empty,
             Origin = job.Origin,
             Destination = job.Destination,
@@ -142,13 +147,15 @@ public class JobService : IJobService
 
         return new JobDto
         {
+            Id = job.Id,
             Title = job.Title ?? string.Empty,
             Origin = job.Origin,
             Destination = job.Destination,
             Precaution = job.Precaution,
             Date = job.Date,
             Description = job.Description,
-            OrdererId = job.OrdererId
+            OrdererId = job.OrdererId,
+            TransporterId = job.TransporterId
         };
     }
 
@@ -166,6 +173,7 @@ public class JobService : IJobService
 
         return new JobDto
         {
+            Id = job.Id,
             Title = job.Title ?? string.Empty,
             Origin = job.Origin,
             Destination = job.Destination,
@@ -181,6 +189,7 @@ public class JobService : IJobService
        var jobs = await _context.Jobs.Where(j => j.TransporterId == transporterId).ToListAsync();
         return jobs.Select(job => new JobDto
         {
+            Id = job.Id,
             Title = job.Title ?? string.Empty,
             Origin = job.Origin,
             Destination = job.Destination,

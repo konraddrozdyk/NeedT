@@ -16,16 +16,10 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/user-context";
 
-// Enum mapping for job statuses
-// const jobStatusLabels: Record<string, number> = {
-//   Pending: 0,
-//   Accepted: 1,
-//   Completed: 2,
-// };
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 export function TransporterDashboard() {
+  const { user } = useUser();
   const [pendingJobs, setPendingJobs] = useState([]);
   const [myJobs, setMyJobs] = useState([]);
   const [allJobs, setAllJobs] = useState([]);
@@ -34,7 +28,6 @@ export function TransporterDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const { user } = useUser();
       try {
         const pendingResponse = await fetch(`${API_URL}/api/Jobs/pending`);
         const pendingData = await pendingResponse.json();
@@ -63,6 +56,32 @@ export function TransporterDashboard() {
     fetchData();
   }, []);
 
+  const handleAcceptJob = async (jobId: number) => {
+    if (!user || !user.id) {
+      console.error("User not logged in or missing ID");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/Jobs/${jobId}/accept`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user.id),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Job accepted:", data);
+      } else {
+        console.error(`Error accepting job: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error("Error accepting job:", error);
+    }
+  };
+
   const renderJobCards = (jobs: any[]) =>
     jobs.length > 0 ? (
       jobs.map((job) => (
@@ -88,7 +107,9 @@ export function TransporterDashboard() {
                 </div>
               </PopoverContent>
             </Popover>
-            <Button className="ml-4">Ta emot transporten</Button>
+            <Button className="ml-4" onClick={() => handleAcceptJob(job.id)}>
+              Ta emot transporten
+            </Button>
           </CardFooter>
         </Card>
       ))

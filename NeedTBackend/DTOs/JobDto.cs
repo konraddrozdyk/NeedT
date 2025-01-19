@@ -12,6 +12,7 @@ public class JobDto
     public bool Precaution { get; set; }
     public DateTime Date { get; set; }
     public string? Description { get; set; }
+    public int? TransporterId { get; set; }
     public int OrdererId { get; set; }
     
     }
