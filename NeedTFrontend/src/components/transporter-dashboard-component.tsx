@@ -22,6 +22,8 @@ import { useEffect, useState } from "react";
 //   Completed: 2,
 // };
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export function TransporterDashboard() {
   const [pendingJobs, setPendingJobs] = useState([]);
   const [myJobs, setMyJobs] = useState([]);
@@ -32,13 +34,13 @@ export function TransporterDashboard() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const pendingResponse = await fetch("/api/Jobs/pending");
+        const pendingResponse = await fetch(`${API_URL}/api/Jobs/pending`);
         const pendingData = await pendingResponse.json();
 
-        const myJobsResponse = await fetch("/api/Jobs/transporter/1");
+        const myJobsResponse = await fetch(`${API_URL}/api/Jobs/transporter/1`);
         const myJobsData = await myJobsResponse.json();
 
-        const allJobsResponse = await fetch("/api/Jobs");
+        const allJobsResponse = await fetch(`${API_URL}/api/Jobs`);
         const allJobsData = await allJobsResponse.json();
 
         setPendingJobs(pendingData);
