@@ -15,11 +15,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/user-context";
+import { useNavigate } from "@tanstack/react-router";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export function TransporterDashboard() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const navigate = useNavigate();
   const [pendingJobs, setPendingJobs] = useState<any[]>([]);
   const [myJobs, setMyJobs] = useState<any[]>([]);
   const [allJobs, setAllJobs] = useState([]);
@@ -121,6 +123,14 @@ export function TransporterDashboard() {
     }
   };
 
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      setUser(null);
+      navigate({ to: "/" });
+    }
+  };
+
   const renderJobCards = (jobs: any[]) =>
     jobs.length > 0 ? (
       jobs.map((job) => (
@@ -196,38 +206,48 @@ export function TransporterDashboard() {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen relative">
-      <div className="w-4/5 h-4/5 bg-white rounded-lg shadow-lg p-6 overflow-hidden">
-        <Tabs
-          defaultValue="waiting"
-          value={activeTab}
-          onValueChange={setActiveTab}
-        >
-          <TabsList>
-            <TabsTrigger value="waiting">Ohanterade transporter</TabsTrigger>
-            <TabsTrigger value="my-transports">Mina transporter</TabsTrigger>
-            <TabsTrigger value="view-all">Alla transporter</TabsTrigger>
-          </TabsList>
+    <>
+      <Button
+        className="absolute top-6 left-6 bg-black text-white p-3 rounded-lg text-sm opacity-70 hover:opacity-100 transition-opacity z-10"
+        onClick={handleLogout}
+      >
+        Logga ut
+      </Button>
+      <div className="flex justify-center items-center h-screen relative">
+        <div className="w-4/5 h-4/5 bg-white rounded-lg shadow-lg p-6 overflow-hidden">
+          <Tabs
+            defaultValue="waiting"
+            value={activeTab}
+            onValueChange={setActiveTab}
+          >
+            <TabsList>
+              <TabsTrigger value="waiting">Ohanterade transporter</TabsTrigger>
+              <TabsTrigger value="my-transports">
+                Mina pågående transporter
+              </TabsTrigger>
+              <TabsTrigger value="view-all">Alla transporter</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="waiting">
-            <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
-              {renderJobCards(pendingJobs)}
-            </div>
-          </TabsContent>
+            <TabsContent value="waiting">
+              <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+                {renderJobCards(pendingJobs)}
+              </div>
+            </TabsContent>
 
-          <TabsContent value="my-transports">
-            <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
-              {renderJobCards(myJobs)}
-            </div>
-          </TabsContent>
+            <TabsContent value="my-transports">
+              <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+                {renderJobCards(myJobs)}
+              </div>
+            </TabsContent>
 
-          <TabsContent value="view-all">
-            <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
-              {renderJobCards(allJobs)}
-            </div>
-          </TabsContent>
-        </Tabs>
+            <TabsContent value="view-all">
+              <div className="grid gap-6 max-h-[calc(100vh-200px)] overflow-y-auto">
+                {renderJobCards(allJobs)}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
