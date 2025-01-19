@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { useUser } from "@/context/user-context";
 
 // Enum mapping for job statuses
 // const jobStatusLabels: Record<string, number> = {
@@ -33,12 +34,18 @@ export function TransporterDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      const { user } = useUser();
       try {
         const pendingResponse = await fetch(`${API_URL}/api/Jobs/pending`);
         const pendingData = await pendingResponse.json();
 
-        const myJobsResponse = await fetch(`${API_URL}/api/Jobs/transporter/1`);
-        const myJobsData = await myJobsResponse.json();
+        let myJobsData = [];
+        if (user) {
+          const myJobsResponse = await fetch(
+            `${API_URL}/api/Jobs/transporter/${user.id}`
+          );
+          myJobsData = await myJobsResponse.json();
+        }
 
         const allJobsResponse = await fetch(`${API_URL}/api/Jobs`);
         const allJobsData = await allJobsResponse.json();
