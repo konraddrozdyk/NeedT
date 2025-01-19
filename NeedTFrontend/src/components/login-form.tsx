@@ -54,18 +54,18 @@ export function LoginForm({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500",
+        "flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 min-h-screen",
         className
       )}
       {...props}
     >
-      <h1 className="mb-6 text-4xl font-extrabold text-white tracking-tight">
+      <h1 className="mb-8 text-5xl font-extrabold text-white tracking-tight">
         NeedT
       </h1>
-      <Card className="w-full max-w-md shadow-xl">
+      <Card className="w-full max-w-md shadow-xl rounded-lg p-6">
         <CardHeader>
-          <CardTitle className="text-2xl">Logga in</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-3xl font-semibold">Logga in</CardTitle>
+          <CardDescription className="text-sm text-gray-200">
             Fyll i dina inloggningsuppgifter för att gå vidare
           </CardDescription>
         </CardHeader>
@@ -81,18 +81,11 @@ export function LoginForm({
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
+                  className="focus:ring-2 focus:ring-blue-500 transition-all duration-200"
                 />
               </div>
               <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Lösenord</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Har du glömt ditt lösenord?
-                  </a>
-                </div>
+                <Label htmlFor="password">Lösenord</Label>
                 <Input
                   id="password"
                   type="password"
@@ -100,15 +93,21 @@ export function LoginForm({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  className="focus:ring-2 focus:ring-blue-500 transition-all duration-200"
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600 transition-all duration-300"
               >
                 Logga in
               </Button>
-              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+              {error && (
+                <p className="text-red-500 text-sm mt-2 flex items-center">
+                  <span className="mr-2">⚠️</span>
+                  {error}
+                </p>
+              )}
             </div>
           </form>
         </CardContent>
