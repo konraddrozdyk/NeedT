@@ -20,7 +20,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export function TransporterDashboard() {
   const { user } = useUser();
-  const [pendingJobs, setPendingJobs] = useState([]);
+  const [pendingJobs, setPendingJobs] = useState<any[]>([]);
   const [myJobs, setMyJobs] = useState<any[]>([]);
   const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -54,8 +54,10 @@ export function TransporterDashboard() {
       }
     };
 
-    fetchData();
-  }, []);
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
 
   const handleAcceptJob = async (jobId: number) => {
     if (!user || !user.id) {
@@ -74,10 +76,14 @@ export function TransporterDashboard() {
 
       if (response.ok) {
         const data = await response.json();
+
+        // Update both `myJobs` and `pendingJobs` states
         setMyJobs((prevMyJobs) => [...prevMyJobs, data]);
+        setPendingJobs((prevPendingJobs) =>
+          prevPendingJobs.filter((job) => job.id !== jobId)
+        );
 
         setActiveTab("my-transports");
-
         console.log("Job accepted:", data);
       } else {
         console.error(`Error accepting job: ${response.statusText}`);
@@ -148,7 +154,7 @@ export function TransporterDashboard() {
     return (
       <div>
         <div>Logga in för att komma åt din dashboard</div>
-        <a href="/index">Logga in</a>
+        <a href="/">Logga in</a>
       </div>
     );
   }
