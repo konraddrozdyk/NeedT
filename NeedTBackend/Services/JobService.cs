@@ -186,7 +186,10 @@ public class JobService : IJobService
     
     public async Task<IEnumerable<JobDto>> GetJobsByTransporter(int transporterId)
     {
-       var jobs = await _context.Jobs.Where(j => j.TransporterId == transporterId).ToListAsync();
+        var jobs = await _context.Jobs
+            .Where(j => j.TransporterId == transporterId && j.JobStatus != Job.Status.Completed)
+            .ToListAsync();
+
         return jobs.Select(job => new JobDto
         {
             Id = job.Id,
@@ -199,5 +202,6 @@ public class JobService : IJobService
             OrdererId = job.OrdererId
         });
     }
+
 
 }
