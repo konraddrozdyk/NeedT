@@ -17,6 +17,9 @@ import {
   CardDescription,
 } from "./ui/card";
 import { Button } from "./ui/button";
+import { LogoutModal } from "./logout-confirm-window";
+import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 interface FormValues {
   location: string;
@@ -27,7 +30,10 @@ interface FormValues {
 }
 
 export default function OrderForm() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+
   const form = useForm<FormValues>({
     defaultValues: {
       location: "",
@@ -37,6 +43,15 @@ export default function OrderForm() {
       additional: "",
     },
   });
+
+  const handleLogout = () => {
+    setIsModalOpen(true);
+  };
+
+  const confirmLogout = () => {
+    setUser(null);
+    navigate({ to: "/" });
+  };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const jobPayload = {
@@ -83,6 +98,17 @@ export default function OrderForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500">
+      <Button
+        className="absolute top-6 left-6 bg-black text-white p-3 rounded-lg text-sm opacity-70 hover:opacity-100 transition-opacity z-10"
+        onClick={handleLogout}
+      >
+        Logga ut
+      </Button>
+      <LogoutModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmLogout}
+      />
       <Card className="w-full max-w-lg shadow-xl">
         <CardHeader>
           <CardTitle className="text-2xl">Beställ transport</CardTitle>
