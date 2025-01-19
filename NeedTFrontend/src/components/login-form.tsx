@@ -12,6 +12,8 @@ import { useUser } from "@/context/user-context";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { Label } from "./ui/label";
+import { FiHelpCircle } from "react-icons/fi";
+import { InfoModal } from "./login-help-modal";
 
 export function LoginForm({
   className,
@@ -22,6 +24,10 @@ export function LoginForm({
   const [error, setError] = useState<string | null>(null);
   const { setUser } = useUser();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +101,15 @@ export function LoginForm({
                   required
                   className="focus:ring-2 focus:ring-blue-500 transition-all duration-200"
                 />
+                <div>
+                  <div
+                    className="cursor-pointer text-blue-500"
+                    onClick={handleOpenModal}
+                  >
+                    <FiHelpCircle size={24} />
+                  </div>
+                  <InfoModal isOpen={isModalOpen} onClose={handleCloseModal} />
+                </div>
               </div>
               <Button
                 type="submit"
