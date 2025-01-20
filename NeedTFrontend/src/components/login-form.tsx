@@ -48,9 +48,11 @@ export function LoginForm({
       setUser(user);
       navigate({
         to:
-          user.userRole === "Orderer"
-            ? "/orderer-dashboard"
-            : "/transporter-dashboard",
+          user.userRole === "Admin"
+            ? "/admin-dashboard"
+            : user.userRole === "Orderer"
+              ? "/orderer-dashboard"
+              : "/transporter-dashboard",
       });
     } catch (err: any) {
       setError(err.message);

@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as TransporterDashboardImport } from './routes/transporter-dashboard'
 import { Route as RegisterImport } from './routes/register'
 import { Route as OrdererDashboardImport } from './routes/orderer-dashboard'
+import { Route as AdminDashboardImport } from './routes/admin-dashboard'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -36,6 +37,12 @@ const OrdererDashboardRoute = OrdererDashboardImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminDashboardRoute = AdminDashboardImport.update({
+  id: '/admin-dashboard',
+  path: '/admin-dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
@@ -51,6 +58,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/admin-dashboard': {
+      id: '/admin-dashboard'
+      path: '/admin-dashboard'
+      fullPath: '/admin-dashboard'
+      preLoaderRoute: typeof AdminDashboardImport
       parentRoute: typeof rootRoute
     }
     '/orderer-dashboard': {
@@ -81,6 +95,7 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-dashboard': typeof AdminDashboardRoute
   '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
   '/transporter-dashboard': typeof TransporterDashboardRoute
@@ -88,6 +103,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-dashboard': typeof AdminDashboardRoute
   '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
   '/transporter-dashboard': typeof TransporterDashboardRoute
@@ -96,6 +112,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/admin-dashboard': typeof AdminDashboardRoute
   '/orderer-dashboard': typeof OrdererDashboardRoute
   '/register': typeof RegisterRoute
   '/transporter-dashboard': typeof TransporterDashboardRoute
@@ -103,12 +120,23 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/orderer-dashboard' | '/register' | '/transporter-dashboard'
+  fullPaths:
+    | '/'
+    | '/admin-dashboard'
+    | '/orderer-dashboard'
+    | '/register'
+    | '/transporter-dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/orderer-dashboard' | '/register' | '/transporter-dashboard'
+  to:
+    | '/'
+    | '/admin-dashboard'
+    | '/orderer-dashboard'
+    | '/register'
+    | '/transporter-dashboard'
   id:
     | '__root__'
     | '/'
+    | '/admin-dashboard'
     | '/orderer-dashboard'
     | '/register'
     | '/transporter-dashboard'
@@ -117,6 +145,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
   OrdererDashboardRoute: typeof OrdererDashboardRoute
   RegisterRoute: typeof RegisterRoute
   TransporterDashboardRoute: typeof TransporterDashboardRoute
@@ -124,6 +153,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
   OrdererDashboardRoute: OrdererDashboardRoute,
   RegisterRoute: RegisterRoute,
   TransporterDashboardRoute: TransporterDashboardRoute,
@@ -140,6 +170,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/admin-dashboard",
         "/orderer-dashboard",
         "/register",
         "/transporter-dashboard"
@@ -147,6 +178,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/admin-dashboard": {
+      "filePath": "admin-dashboard.tsx"
     },
     "/orderer-dashboard": {
       "filePath": "orderer-dashboard.tsx"
