@@ -122,7 +122,7 @@ export default function OrderForm() {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Från vårdplats</FormLabel>
+                    <FormLabel>Från vårdplats*</FormLabel>
                     <FormControl>
                       <input
                         type="text"
@@ -141,7 +141,7 @@ export default function OrderForm() {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Destination</FormLabel>
+                    <FormLabel>Destination*</FormLabel>
                     <FormControl>
                       <input
                         type="text"
@@ -160,7 +160,7 @@ export default function OrderForm() {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Namn</FormLabel>
+                    <FormLabel>Namn*</FormLabel>
                     <FormControl>
                       <input
                         type="text"
@@ -179,7 +179,7 @@ export default function OrderForm() {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Smittorisk</FormLabel>
+                    <FormLabel>Smittorisk*</FormLabel>
                     <FormControl>
                       <div className="flex items-center space-x-4">
                         <label className="flex items-center space-x-2">
