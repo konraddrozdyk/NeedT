@@ -145,6 +145,7 @@ export function TransporterDashboard() {
           <CardContent>
             <p>Från: {job.origin}</p>
             <p>Till: {job.destination}</p>
+            <p>Patientens namn: {job.name}</p>
             <p>Smittrisk: {job.precaution ? "Ja" : "Nej"}</p>
           </CardContent>
           <CardFooter>

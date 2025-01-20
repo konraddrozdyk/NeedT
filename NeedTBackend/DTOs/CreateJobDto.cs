@@ -10,6 +10,8 @@ namespace NeedTBackend.Dtos
         [Required]
         public string Destination { get; set; } = null!;
         [Required]
+        public string Name { get; set; } = null!;
+        [Required]
         public bool Precaution { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
         public string? Description { get; set; }
