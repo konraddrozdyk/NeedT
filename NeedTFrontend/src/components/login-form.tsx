@@ -59,10 +59,7 @@ export function LoginForm({
 
   return (
     <div
-      className={cn(
-        "flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 min-h-screen",
-        className
-      )}
+      className={cn("flex flex-col items-center justify-center", className)}
       {...props}
     >
       <h1 className="mb-8 text-5xl font-extrabold text-white tracking-tight">
