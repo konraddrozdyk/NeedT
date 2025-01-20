@@ -98,7 +98,7 @@ export default function OrderForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500">
+    <div className="flex items-center justify-center min-h-screen ">
       <Button
         className="absolute top-6 left-6 bg-black text-white p-3 rounded-lg text-sm opacity-70 hover:opacity-100 transition-opacity z-10"
         onClick={handleLogout}
