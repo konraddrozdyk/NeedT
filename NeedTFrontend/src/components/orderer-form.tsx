@@ -58,6 +58,7 @@ export default function OrderForm() {
       title: "Transport Job",
       origin: data.location,
       destination: data.destination,
+      name: data.name,
       precaution: data.warning === "option1",
       description: data.additional,
       ordererId: user?.id,
