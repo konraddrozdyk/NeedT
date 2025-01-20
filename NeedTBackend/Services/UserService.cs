@@ -54,4 +54,9 @@ public class UserService : IUserService
         }
         return new UserDto { Username = user.Username, UserRole = user.UserRole.ToString(), Id = user.Id };
     }
+
+    public async Task<IEnumerable<User>> GetUsersAsync()
+    {
+        return await _context.Users.ToListAsync();
+    }
 }
