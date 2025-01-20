@@ -1,10 +1,5 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import {
   Card,
   CardHeader,
   CardTitle,
@@ -17,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@/context/user-context";
 import { useNavigate } from "@tanstack/react-router";
 import { LogoutModal } from "./logout-confirm-window";
+import JobDetailsPopover from "./details-popover";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -149,29 +145,7 @@ export function TransporterDashboard() {
             <p>Smittrisk: {job.precaution ? "Ja" : "Nej"}</p>
           </CardContent>
           <CardFooter>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button>Se detaljerad info</Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <div>
-                  <p>Jobb ID: {job.id}</p>
-                  <p>
-                    Beskrivning:{" "}
-                    {job.description || "Ingen beskrivning tillgänglig"}
-                  </p>
-                  <p>Från: {job.origin}</p>
-                  <p>Till: {job.destination}</p>
-                  <p>Datum: {new Date(job.date).toLocaleString()}</p>
-                  <p>Smittrisk: {job.precaution ? "Ja" : "Nej"}</p>
-                  <p>
-                    Transportör:{" "}
-                    {job.transporterId ? job.transporterId : "Ej tilldelad"}
-                  </p>
-                  <p>Beställare: {job.ordererId}</p>
-                </div>
-              </PopoverContent>
-            </Popover>
+            <JobDetailsPopover job={job} />
             <Button
               className="ml-4"
               onClick={() => handleAcceptJob(job.id)}
