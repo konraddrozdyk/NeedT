@@ -148,7 +148,7 @@ export function TransporterDashboard() {
           <CardFooter>
             <JobDetailsPopover job={job} />
             <Button
-              className="ml-4"
+              className="ml-4 bg-blue-500 text-white"
               onClick={() => handleAcceptJob(job.id)}
               style={{ display: activeTab === "waiting" ? "inline" : "none" }}
             >
@@ -156,7 +156,7 @@ export function TransporterDashboard() {
             </Button>
             {activeTab === "my-transports" && job.status !== "completed" && (
               <Button
-                className="ml-4"
+                className="ml-4 bg-green-500 text-white"
                 onClick={() => handleCompleteJob(job.id)}
               >
                 Sätt som färdigt
