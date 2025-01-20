@@ -111,6 +111,7 @@ export function TransporterDashboard() {
         const updatedJob = await response.json();
 
         setMyJobs((prevMyJobs) => prevMyJobs.filter((job) => job.id !== jobId));
+        setActiveTab("waiting");
 
         console.log("Job marked as completed:", updatedJob);
       } else {
