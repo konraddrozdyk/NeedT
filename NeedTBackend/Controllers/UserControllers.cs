@@ -67,4 +67,11 @@ public class UsersController : ControllerBase
             return NotFound(e.Message);
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetUsers()
+    {
+        var users = await _userService.GetUsersAsync();
+        return Ok(users);
+    }
 }

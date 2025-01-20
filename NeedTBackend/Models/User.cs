@@ -17,6 +17,7 @@ public class User
     public enum Role
     {
         Orderer,
-        Transporter
+        Transporter,
+        Admin
     }
 }
